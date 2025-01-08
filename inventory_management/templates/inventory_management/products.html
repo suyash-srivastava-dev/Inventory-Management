@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %} Dashboard {% endblock title %} 
+{% block page_content %}
+{% comment %} Top bar add new product {% endcomment %}
+{% if product_add %}
+<div class="alert alert-success" role="alert">
+  Product {{product_name}} added successfully.
+</div>
+{% endif %}
+
+<div class="container text-center p-3">
+    <div class="row">
+      <div class="col-sm-8">
+        <h1>Products</h1>
+      </div>
+      <div class="col-sm-4">
+        <a type="button" class="btn btn-outline-primary" href="/add-product" role="button">New Product</a>
+      </div>
+    </div>
+</div>
+{% comment %} List of all product {% endcomment %}
+<div class="container mx-auto p-5">
+    <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Category</th>
+            <th scope="col">Price</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Supplier</th>
+            <th scope="col">Action</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          {% for product in table_data %}
+          <tr>
+            <th scope="row">{{product.id}}</th>
+            <td>{{product.name}}</td>
+            <td>{{product.description}}</td>
+            <td>{{product.category}}</td>
+            <td>Rs {{product.price}}</td>
+            <td>{{product.stock}}</td>
+            <td>{{product.supplier_id}}</td>
+            <td>
+                {% comment %} Add form for quantity to add to cart {% endcomment %}
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                    <a href="edit-product/{{product.id}}" type="button" class="btn btn-primary">Edit</a>
+                    <a href="remove-product/{{product.id}}" type="button" class="btn btn-outline-danger">Delete</a>
+                  </div>
+            </td>
+          </tr>
+          {% endfor %}
+          
+        </tbody>
+      </table>
+</div>
+{% endblock page_content %}

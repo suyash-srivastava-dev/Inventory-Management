@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %} Suppliers {% endblock title %} 
+{% block page_content %}
+{% comment %} Top bar add new product {% endcomment %}
+{% if supplier_add %}
+<div class="alert alert-success" role="alert">
+  Supplier {{supplier_name}} created successfully.
+</div>
+{% endif %}
+
+<div class="container text-center p-3">
+    <div class="row">
+      <div class="col-sm-8">
+        <h1>Suppliers</h1>
+      </div>
+      <div class="col-sm-4">
+        <a type="button" class="btn btn-outline-primary" href="/add-supplier" role="button">New Supplier</a>
+      </div>
+    </div>
+</div>
+{% comment %} List of all product {% endcomment %}
+<div class="container mx-auto p-5">
+    <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">ID</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Phone Number</th>
+            <th scope="col">Address</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody class="table-group-divider">
+          {% for supplier in table_data %}
+          <tr>
+            <th scope="row">{{supplier.id}}</th>
+            <td>{{supplier.name}}</td>
+            <td>{{supplier.email}}</td>
+            <td>{{supplier.phone_number}}</td>
+            <td>{{supplier.address}}</td>
+            <td>
+                {% comment %} Add form for quantity to add to cart {% endcomment %}
+                <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                    <a href="edit-supplier/{{supplier.id}}" type="button" class="btn btn-primary">Edit</button>
+                    <a href="remove-supplier/{{supplier.id}}" type="button" class="btn btn-outline-danger">Delete</a>
+                  </div>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+</div>
+{% endblock page_content %}

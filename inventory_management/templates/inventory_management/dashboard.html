@@ -1,0 +1,135 @@
+{% extends "base.html" %}
+{% block title %} Dashboard {% endblock title %} 
+{% block page_content %}
+
+{% comment %} Sales Order list : Filtered by pending {% endcomment %}
+
+{% comment %} Side box with count of orders in different state {% endcomment %}
+
+<div class="container text-center">
+    <div class="row">
+      <div class="col-sm-8">
+        <h1>Sales Lists</h1>
+        <div>
+            <table class="table table-bordered">
+                <thead>
+                  <tr class="table-dark">
+                    <th scope="col">ID</th>
+                    <th scope="col">Product</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Total Price</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                  {% for sales in table_data %}
+                  <tr>
+                    <th scope="row">{{sales.id}}</th>
+                    <td>{{sales.product_name}}</td>
+                    <td>{{sales.quantity}}</td>
+                    <td>Rs {{sales.total_price}}</td>
+                    <td>{{sales.date}}</td>
+                    <td>{{sales.status}}</td>
+                    <td>
+                        {% comment %} Add form for quantity to add to cart {% endcomment %}
+                        <div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+                            <a href="update-status/{{sales.id}}/completed" type="button" class="btn btn-success">Approve</a>
+                            <a href="update-status/{{sales.id}}/cancelled" type="button" class="btn btn-danger">Cancel</a>
+                        </div>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                  
+                </tbody>
+              </table>
+        </div>
+      </div>
+      <div class="col-sm-4 pt-5">
+        <table class="table table-bordered">
+            <thead>
+              <tr class="table-dark">
+                <th scope="col">Status</th>
+                <th scope="col">No.</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">PENDING</th>
+                <td>{{status_count.pending}}</td>
+              </tr>
+              <tr class="table-success">
+                <th scope="row">COMPLETED</th>
+                <td>{{status_count.completed}}</td>
+                
+              </tr>
+              <tr class="table-danger">
+                <th scope="row">CANCELLED</th>
+                <td>{{status_count.cancelled}}</td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+    </div>
+    <div class="row pt-6">
+        
+      <div class="col-sm-6">
+        <h1>Products</h1>
+        <div class="container mx-auto ">
+            <table class="table table-bordered">
+                <thead>
+                  <tr class="table-primary">
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Category</th>
+                    <th scope="col">Price</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Supplier</th>
+                  </tr>
+                </thead>
+                <tbody class="table-group-divider">
+                  {% for product in products_list %}
+                  <tr>
+                    <th scope="row">{{product.id}}</th>
+                    <td>{{product.name}}</td>
+                    <td>{{product.description}}</td>
+                    <td>{{product.category}}</td>
+                    <td>Rs {{product.price}}</td>
+                    <td>{{product.stock}}</td>
+                    <td>{{product.supplier_id}}</td>
+                  </tr>
+                  {% endfor %}
+                  
+                </tbody>
+              </table>
+        </div>
+      </div>
+      <div class="col-sm">
+        <h1>Need to restock</h1>
+        <table class="table table-bordered">
+            <thead>
+              <tr class="table-dark">
+                <th scope="col">Product Name</th>
+                <th scope="col">Quantity</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for product in products_list %}
+              <tr>
+                <th scope="row">{{product.name}}</th>
+                <td>{{product.stock}}</td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+      </div>
+      
+    </div>
+  </div>
+  <div class="col-6">
+    <canvas id="salesChart"></canvas>
+  </div>
+
+{% endblock page_content %}

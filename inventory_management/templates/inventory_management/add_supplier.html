@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block title %} Dashboard {% endblock title %} 
+{% block page_content %}
+  <h1>Add New Supplier</h1>
+<div class="container p-5 ">
+  <form class="needs-validation" novalidate method="post">
+    {% csrf_token %} 
+    <div class="form-row">
+      <div class="col-md-4 mb-3">
+        <label for="name">Name</label>
+        <input type="text" class="form-control" id="name" name="name" placeholder="Supplier Name" value="{{supplier.name}}" required>
+        <div class="invalid-feedback">
+              Supplier name is required
+        </div>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="email">Email</label>
+        <div class="input-group">
+          <input type="email" class="form-control" id="email" name="email" placeholder="youraccount@org.com" aria-describedby="inputGroupPrepend" value="{{supplier.email}}" required>
+          <div class="invalid-feedback">
+            Please provide correct email.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-6 mb-3">
+        <label for="phone_number">Phone Number</label>
+        <input type="number" class="form-control" id="phone_number" name="phone_number" placeholder="9999999999" value="{{supplier.phone_number}}" required>
+        <div class="invalid-feedback">
+          Please provide phone number
+        </div>
+      </div>
+      
+      <div class="form-group col-md-6 mb-3">
+        <label for="address">Address</label>
+        <textarea class="form-control" id="address" name="address" rows="4" >{{supplier.address}}</textarea>
+      </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Create</button>
+  </form>
+</div>
+  <script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.getElementsByClassName('needs-validation');
+      // Loop over them and prevent submission
+      var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+  </script>
+    {% comment %} <form method="post">
+        {% csrf_token %} 
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="4" required></textarea><br><br>
+
+        <button type="submit">Submit</button>
+    </form> {% endcomment %}
+
+{% endblock page_content %}

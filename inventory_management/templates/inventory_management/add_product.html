@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %} Dashboard {% endblock title %} 
+{% block page_content %}
+
+  <h1>Add New Product</h1>
+<div class="container p-5 ">
+  <form class="needs-validation" novalidate method="post">
+    {% csrf_token %} 
+    <div class="form-row">
+      <div class="col-md-4 mb-3">
+        <label for="product_name">Name</label>
+        <input type="text" class="form-control" id="product_name" name="product_name" placeholder="Product Name" value="{{product.name}}" required>
+        <div class="invalid-feedback">
+              Product name is required
+        </div>
+      </div>
+      <div class="form-group col-md-4 mb-3">
+        <label for="category">Category</label>
+        <select class="form-control" id="category" name="category" required>
+          <option value="" selected hidden>Select the Category</option>
+          {% for option in categorys %}
+          <option value="{{ option }}" {% if option == product.category %}selected{% endif %}>{{option}}</option>
+          {% endfor %}
+        </select>
+        <div class="invalid-feedback">
+              Please provide product category.
+        </div>
+      </div>
+      <div class="form-group col-md-4 mb-3">
+        <label for="supplier">Supplier</label>
+        <select class="form-control" id="supplier" name="supplier" value="{{supplier_name}}" required>
+          <option  value="" selected hidden>Select the Supplier</option>
+          {% for option in suppliers %}
+          <option value="{{ option }}" {% if option == supplier_name %}selected{% endif %}>{{option}}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="price">Price</label>
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="inputGroupPrepend">₹</span>
+          </div>
+          <input type="number" class="form-control" id="price" name="price" placeholder="20" aria-describedby="inputGroupPrepend" value="{{product.price}}" required>
+          <div class="invalid-feedback">
+            Please provide cost of product.
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="col-md-6 mb-3">
+        <label for="stock_quantity">Stock Quantity</label>
+        <input type="number" class="form-control" id="stock_quantity" name="stock_quantity" placeholder="52" value="{{product.stock}}" required>
+        <div class="invalid-feedback">
+          Please provide quantity of product.
+        </div>
+      </div>
+      
+      <div class="form-group col-md-6 mb-3">
+        <label for="description">Description</label>
+        <textarea class="form-control" id="description" name="description" rows="4">{{product.description}}</textarea>
+      </div>
+    </div>
+    <button class="btn btn-primary" type="submit">Submit form</button>
+  </form>
+</div>
+  <script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.getElementsByClassName('needs-validation');
+      // Loop over them and prevent submission
+      var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+          if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+          }
+          form.classList.add('was-validated');
+        }, false);
+      });
+    }, false);
+  })();
+  </script>
+    {% comment %} <form method="post">
+        {% csrf_token %} 
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required><br><br>
+
+        <label for="message">Message:</label>
+        <textarea id="message" name="message" rows="4" required></textarea><br><br>
+
+        <button type="submit">Submit</button>
+    </form> {% endcomment %}
+
+{% endblock page_content %}
